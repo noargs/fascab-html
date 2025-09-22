@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fas Cab Arcade</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Press Start 2P', cursive;
+      overflow-x: hidden;
+    }
+    /* Softer neon glow */
+    .glow { text-shadow: 0 0 4px #0ff, 0 0 6px #08f; }
+    /* Buttons pulse */
+    .pulse { animation: pulse 1.5s infinite; }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 4px #0ff, inset 0 0 6px #0ff; }
+      50% { box-shadow: 0 0 10px #f0f, inset 0 0 12px #0ff; }
+    }
+    /* City text */
+    .city-text {
+      color: #facc15;
+      text-shadow: 1px 1px 2px #000;
+    }
+    /* Floating car */
+    .float { animation: float 2s ease-in-out infinite; }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    /* Pixel shadow */
+    .pixel-shadow {
+      filter: drop-shadow(4px 4px 0px #111)
+              drop-shadow(-4px -4px 0px #000);
+      image-rendering: pixelated;
+    }
+    /* Moving yellow line */
+    .road-line {
+      position: relative;
+      width: 100%;
+      height: 8px;
+      background-image: repeating-linear-gradient(
+        to right,
+        #facc15 0 40px,
+        transparent 40px 80px
+      );
+      animation: dashMove 1s linear infinite;
+      background-size: 160px 100%;
+    }
+    @keyframes dashMove {
+      from { background-position: 0 0; }
+      to { background-position: -160px 0; }
+    }
+    /* Floating sign */
+    .sign {
+      position: absolute;
+      top: 10px;
+      background: #0f0;
+      color: #000;
+      padding: 6px 12px;
+      border: 3px solid #fff;
+      font-size: 12px;
+      transform: skew(-5deg);
+      box-shadow: 2px 2px #000;
+      white-space: nowrap;
+    }
+    /* Stars bg */
+    .stars {
+      background: black url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+      animation: moveStars 60s linear infinite;
+    }
+    @keyframes moveStars {
+      from { background-position: 0 0; }
+      to { background-position: -10000px 10000px; }
+    }
+  </style>
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body class="stars text-white min-h-screen flex flex-col relative text-left">
+  
+  <!-- Gradient overlay -->
+  <div class="absolute inset-0 bg-gradient-to-b from-purple-900/80 via-pink-700/70 to-blue-900/80 z-0"></div>
+  
+  <!-- Content -->
+  <div class="flex-grow w-full max-w-5xl mx-auto px-6 pt-8 pb-20 relative z-10">
+    <div class="flex flex-col md:flex-row items-center md:justify-between gap-10">
+      
+      <!-- Left -->
+      <div class="space-y-6 md:w-1/2">
+        <h1 class="text-3xl md:text-4xl glow text-cyan-500">FasCab</h1>
+        <h2 class="text-l  glow leading-relaxed text-cyan-200">
+          Book Your Ride<br />Anywhere in!
+        </h2>
+        <p class="text-2xl md:text-xl city-text">
+          Waterford<br />Carrick-on-Suir<br />Kilkenny<br />Clonmel
+        </p>
+        <!-- Buttons -->
+        <div class="flex gap-4 mt-6">
+          <a href="tel:0858105072"
+            onclick="playSound('startSound')"
+            class="pulse bg-black border-2 border-cyan-400 text-cyan-300 px-4 py-3 rounded font-bold transition">
+            📞 CALL
+          </a>
+          <a href="https://wa.me/353858105072?text=Hi%20Fas%20Cab%2C%20I%20want%20to%20book%20a%20taxi"
+            target="_blank"
+            onclick="playSound('startSound')"
+            class="pulse bg-black border-2 border-green-400 text-green-300 px-4 py-3 rounded font-bold transition">
+            💬 WHATSAPP
+          </a>
+        </div>
+      </div>
+
+      <!-- Car + Sign -->
+      <div class="md:w-1/2 flex flex-col items-center relative">
+        <!--<div class="sign mt-3 mr-80"><span class="text-xl">&#x21e8;</span> WATERFORD</div> -->
+        <img src="/my-car.png" alt="Fas Cab Car"
+          class="float max-h-72 object-contain pixel-shadow relative z-10" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Moving line above footer -->
+<div class="road-line"></div>
+
+  <!-- Footer -->
+  <footer class="relative bg-black text-cyan-200 text-center py-1 text-xs z-20">
+    <p class="relative z-10 glow inline">© 2025 FasCab</p> <p class="inline text-xl">🚕</p>
+  </footer>
+
+  <!-- Sounds -->
+<!-- <audio id="coinSound" src="https://actions.google.com/sounds/v1/cartoon/coin_ding.ogg"></audio>-->
+
+<audio id="startSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+   <script>
+    function playSound(id) {
+      const sound = document.getElementById(id);
+      if (sound) {
+        sound.currentTime = 0;
+        sound.play();
+      }
+    }
+   </script>
+</body>
+</html>
